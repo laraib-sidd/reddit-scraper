@@ -4,18 +4,33 @@ from utils import *
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-n",
-                        "--name",
-                        type=str,
-                        help="subredit_name",
-                        dest="sub_name",
-                        required=True)
-    parser.add_argument("-sd", "--start-date", type=str,
-                        help="start_date format YYYY/MM/DD example : 2021-02-01", dest="start_date", required=True)
-    parser.add_argument("-ed", "--end-date", type=str,
-                        help="end_date format YYYY/MM/DD example : 2022-04-01", dest="end_date", required=True)
-    parser.add_argument("-l", "--load-type", type=str,
-                        help="output file, options 1)mongo 2)csv 3)dual", dest="output", required=True)
+    parser.add_argument(
+        "-n", "--name", type=str, help="subredit_name", dest="sub_name", required=True
+    )
+    parser.add_argument(
+        "-sd",
+        "--start-date",
+        type=str,
+        help="start_date format YYYY/MM/DD example : 2021-02-01",
+        dest="start_date",
+        required=True,
+    )
+    parser.add_argument(
+        "-ed",
+        "--end-date",
+        type=str,
+        help="end_date format YYYY/MM/DD example : 2022-04-01",
+        dest="end_date",
+        required=True,
+    )
+    parser.add_argument(
+        "-l",
+        "--load-type",
+        type=str,
+        help="output file, options 1)mongo 2)csv 3)dual",
+        dest="output",
+        required=True,
+    )
     args = parser.parse_args()
 
     class Object(object):

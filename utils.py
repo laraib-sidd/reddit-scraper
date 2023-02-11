@@ -165,7 +165,7 @@ def load_mongo_posts_api(date_range, client, args):
             post['selftext'] = "".join(post['selftext'].splitlines())
             post['post_url'] = f"https://www.reddit.com{post['permalink']}"
             li.append(post)
-            load_comments_mongo(post['id'],ddate,month,client)
+            load_comments_mongo(post['id'], ddate, month, client)
         mycol.insert_many(li)
 
 
@@ -199,7 +199,7 @@ def load_csv_posts_api(date_range, args):
         for post in posts:
             post['selftext'] = "".join(post['selftext'].splitlines())
             post['post_url'] = f"https://www.reddit.com{post['permalink']}"
-            load_comments_csv(post["id"],sub_name,ddate,month)
+            load_comments_csv(post["id"], sub_name, ddate, month)
             li.append(post)
 
         df = pd.DataFrame.from_dict(li, orient='columns')
@@ -219,8 +219,8 @@ def load_comments_csv(pid, sub_name, ddate, month):
     p_id_path = f"test/data/comments/{sub_name}/{month}/{ddate}/{pid}"
     if not os.path.exists(p_id_path):
         os.makedirs(p_id_path)
-        
-    base_10_id = int(pid,36)
+
+    base_10_id = int(pid, 36)
     url = f"https://api.pushshift.io/reddit/search/comment?link_id={base_10_id}&limit=3"
     response = urllib.request.urlopen(url)
     text = response.read()
@@ -232,8 +232,8 @@ def load_comments_csv(pid, sub_name, ddate, month):
     if len(comments) == 0:
         return
     li = []
-    for comment in comments: 
-        comment["post_id"] = pid     
+    for comment in comments:
+        comment["post_id"] = pid
         comment['body'] = "".join(comment['body'].splitlines())
         comment['comment_url'] = f"https://www.reddit.com{comment['permalink']}"
         li.append(comment)
@@ -243,11 +243,11 @@ def load_comments_csv(pid, sub_name, ddate, month):
         f"test/data/comments/{sub_name}/{month}/{ddate}/{pid}/comments.csv", index=False)
 
 
-def load_comments_mongo(pid, ddate, month,client):
+def load_comments_mongo(pid, ddate, month, client):
     mydb = client["test"]
     mycol = mydb["comments"]
-        
-    base_10_id = int(pid,36)
+
+    base_10_id = int(pid, 36)
     url = f"https://api.pushshift.io/reddit/search/comment?link_id={base_10_id}&limit=1000"
     response = urllib.request.urlopen(url)
     text = response.read()
@@ -259,8 +259,8 @@ def load_comments_mongo(pid, ddate, month,client):
     if len(comments) == 0:
         return
     li = []
-    for comment in comments: 
-        comment["post_id"] = pid     
+    for comment in comments:
+        comment["post_id"] = pid
         comment['body'] = "".join(comment['body'].splitlines())
         comment['comment_url'] = f"https://www.reddit.com{comment['permalink']}"
         li.append(comment)

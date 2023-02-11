@@ -148,7 +148,7 @@ def load_mongo_posts_api(date_range, client, args):
         sd = int(dt.strptime(date_range[i], "%Y-%m-%d").timestamp())
         ed = int(dt.strptime(date_range[i + 1], "%Y-%m-%d").timestamp())
 
-        url = f"https://api.pushshift.io/reddit/search/submission/?subreddit={sub_name}&metadata=true&limit=3&since={sd}&until={ed}"
+        url = f"https://api.pushshift.io/reddit/search/submission/?subreddit={sub_name}&metadata=true&limit=1000&since={sd}&until={ed}"
         response = urllib.request.urlopen(url)
         text = response.read()
         req_data = json.loads(text.decode("utf-8"))
@@ -182,7 +182,7 @@ def load_csv_posts_api(date_range, args):
         sd = int(dt.strptime(date_range[i], "%Y-%m-%d").timestamp())
         ed = int(dt.strptime(date_range[i + 1], "%Y-%m-%d").timestamp())
 
-        url = f"https://api.pushshift.io/reddit/search/submission/?subreddit={sub_name}&metadata=true&limit=3&since={sd}&until={ed}"
+        url = f"https://api.pushshift.io/reddit/search/submission/?subreddit={sub_name}&metadata=true&limit=1000&since={sd}&until={ed}"
         response = urllib.request.urlopen(url)
         text = response.read()
         req_data = json.loads(text.decode("utf-8"))
@@ -214,7 +214,7 @@ def load_comments_csv(pid, sub_name, ddate, month):
         os.makedirs(p_id_path)
 
     base_10_id = int(pid, 36)
-    url = f"https://api.pushshift.io/reddit/search/comment?link_id={base_10_id}&limit=3"
+    url = f"https://api.pushshift.io/reddit/search/comment?link_id={base_10_id}&limit=1000"
     response = urllib.request.urlopen(url)
     text = response.read()
     req_data = json.loads(text.decode("utf-8"))

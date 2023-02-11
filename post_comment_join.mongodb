@@ -1,0 +1,10 @@
+db.posts.aggregate([
+    { $lookup:
+        {
+           from: "comments",
+           localField: "id",
+           foreignField: "post_id",
+           as: "comments"
+        }
+    }
+]).pretty();
